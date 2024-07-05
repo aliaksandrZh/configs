@@ -1,0 +1,37 @@
+#!/bin/sh
+
+CURRENT_BRANCH="$(git branch --show-current)"
+
+if [ "$CURRENT_BRANCH" = "" ]
+then
+  echo "Current branch hasn't found!"
+  exit 1
+fi
+
+
+FORBIDDEN_BRANCHES="main master"
+FORBIDDEN_PATTERNS="release/"
+
+stop_committing() {
+  echo "You can't commit directly to $1 branch!"
+  exit 1
+}
+
+for forbidden_branch in $FORBIDDEN_BRANCHES
+do
+  if [ "$CURRENT_BRANCH" = "$forbidden_branch" ]
+  then
+    stop_committing "$CURRENT_BRANCH"
+  fi
+done
+
+for forbidden_pattern in $FORBIDDEN_PATTERNS
+do
+  if [[ $CURRENT_BRANCH = *"$forbidden_pattern"* ]]
+  then
+    stop_committing "$CURRENT_BRANCH"
+  fi
+done
+
+echo "Committed to $CURRENT_BRANCH"
+exit 0

@@ -1,0 +1,23 @@
+[user]
+        email = ###
+        name = ###
+[alias]
+        st = status
+        scb = branch --show-current
+        ck = checkout
+        pushu = push --set-upstream origin HEAD
+        sal = config --get-regexp 'alias'
+        # revert last commit
+        revertlc = reset --soft HEAD~1
+        # revome files from index
+        drop = reset HEAD
+        gmaster = checkout master
+        gmain = checkout main
+        logf = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold red)<%an>'
+[init]
+        templatedir = ~/.git-templates
+[filter "lfs"]
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
